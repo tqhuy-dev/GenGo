@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">GenGo</string>
+    <string name="hint_input_account">account</string>
+    <string name="hint_input_password">password</string>
+    <string name="login_button">Login</string>
+    <string name="clear_button">Clear</string>
+</resources>
