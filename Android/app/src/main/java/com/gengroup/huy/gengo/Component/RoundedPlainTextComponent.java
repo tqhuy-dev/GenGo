@@ -10,7 +10,11 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
 
+import com.gengroup.huy.gengo.Model.PatternValid;
 import com.gengroup.huy.gengo.R;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by
@@ -18,6 +22,7 @@ import com.gengroup.huy.gengo.R;
  */
 
 public class RoundedPlainTextComponent extends AppCompatEditText {
+    private PatternValid patternValid ;
     public RoundedPlainTextComponent(Context context) {
         super(context);
     }
@@ -33,5 +38,28 @@ public class RoundedPlainTextComponent extends AppCompatEditText {
     @Override
     public void setTypeface(Typeface tf, int style) {
         super.setTypeface(Typeface.createFromAsset(getContext().getAssets(),"fonts/opensans_bold.ttf"));
+    }
+
+    public void setPatternValid(PatternValid patternValid) {
+        this.patternValid = patternValid;
+    }
+
+    public Boolean checkValidPattern(String text , String pattern){
+        Pattern patternCheck = Pattern.compile(pattern);
+        Matcher matcher = patternCheck.matcher(text);
+        return matcher.matches();
+    }
+
+    public Boolean checkValidAll(){
+        if(patternValid.getPatternRegEx() != null && !(this.checkValidPattern(this.getText().toString() , patternValid.getPatternRegEx()))){
+            return false;
+        } else
+        if(patternValid.getMaxLength() != 0 && (this.getText().length() > patternValid.getMaxLength())){
+            return false;
+        } else
+        if(patternValid.getMinLength() != 0 && this.getText().length() < patternValid.getMinLength()){
+            return false;
+        }
+        return true;
     }
 }
