@@ -20,8 +20,12 @@ router.post('/login' , (req , res , next) =>{
     })
 })
 
-router.get('test' , (req , res , next) =>{
-
+router.get('/:account/transaction' , (req , res , next) =>{
+    user.getAccountTransactionList(req.params.account).then((result) =>{
+        res.status(200).json(result);
+    }).catch((error) =>{
+        res.status(401).json(error);
+    })
 })
 
 module.exports = router;

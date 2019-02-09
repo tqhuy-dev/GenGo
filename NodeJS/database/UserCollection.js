@@ -44,11 +44,11 @@ class UserCollection {
                     if (error) {
                         reject(Constant.QUERY_ERROR_MESSAGE)
                     } else {
-                        resolve(Constant.ResponseMessage(false,'Signin success'))
+                        resolve(Constant.ResponseMessage(false, 'Signin success'))
                     }
                 })
             } else {
-                resolve(Constant.ResponseMessage(true,'Account is exist'))
+                resolve(Constant.ResponseMessage(true, 'Account is exist'))
             }
         })
     }
@@ -77,22 +77,37 @@ class UserCollection {
         var account = req.body.account;
         var password = req.body.password;
 
-        return new Promise((resolve , reject) =>{
+        return new Promise((resolve, reject) => {
             User.findOne({
                 account: account,
                 password: password
             }, (error, result) => {
-                if(error){
+                if (error) {
                     reject(Constant.QUERY_ERROR_MESSAGE);
-                } else{
-                    if(result != null){
-                        resolve(Constant.ResponseMessage(false,UUID()));
+                } else {
+                    if (result != null) {
+                        resolve(Constant.ResponseMessage(false, UUID()));
                     } else {
-                        resolve(Constant.ResponseMessage(true,'Login fail'))
+                        resolve(Constant.ResponseMessage(true, 'Login fail'))
                     }
                 }
             })
         })
+    }
+
+    getAccountTransactionList(account) {
+        return new Promise((resolve, reject) => {
+            User.findOne({
+                account: account
+            }, (error, result) => {
+                if (error) {
+                    reject(Constant.QUERY_ERROR_MESSAGE);
+                } else  {
+                    resolve(result.history)
+                }
+            });
+        })
+
     }
 }
 

@@ -4,4 +4,12 @@
     <string name="hint_input_password">password</string>
     <string name="login_button">Login</string>
     <string name="clear_button">Clear</string>
+    <string name="signup_link">Don\'t have an account? Sign Up</string>
+    <string name="hint_firstname_signin_form">first name</string>
+    <string name="hint_lastname_signin_form">last name</string>
+    <string name="hint_account_signin_form">Account</string>
+    <string name="hint_password_signin_form">password</string>
+    <string name="hint_confirm_password_signin_form">confirm password</string>
+    <string name="sign_in_button_form">Sign In</string>
+    <string name="login_signin_form">Login</string>
 </resources>
