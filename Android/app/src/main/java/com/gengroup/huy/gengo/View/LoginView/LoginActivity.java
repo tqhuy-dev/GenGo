@@ -17,7 +17,7 @@ import android.util.Log;
 import com.gengroup.huy.gengo.Api.ApiClient;
 import com.gengroup.huy.gengo.Api.Body.LoginBody;
 import com.gengroup.huy.gengo.Api.GenGoServices;
-import com.gengroup.huy.gengo.Api.Response.LoginResponse;
+import com.gengroup.huy.gengo.Api.Response.BaseResponse;
 import com.gengroup.huy.gengo.Common.Constant.Constant;
 import com.gengroup.huy.gengo.Common.Validator.GenGoValidator;
 import com.gengroup.huy.gengo.Component.RoundedButtonComponent;
@@ -46,15 +46,15 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.btnLogin)
     public void Login(){
-        Call<LoginResponse> call = genGoServices.login(new LoginBody(edtAccount.getText().toString(),edtPassword.getText().toString()));
-        call.enqueue(new Callback<LoginResponse>() {
+        Call<BaseResponse> call = genGoServices.login(new LoginBody(edtAccount.getText().toString(),edtPassword.getText().toString()));
+        call.enqueue(new Callback<BaseResponse>() {
             @Override
-            public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
+            public void onResponse(@NonNull Call<BaseResponse> call, @NonNull Response<BaseResponse> response) {
                 Log.d("response" , response.body().message);
             }
 
             @Override
-            public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<BaseResponse> call, @NonNull Throwable t) {
                 Log.d("response" , t.toString());
             }
         });

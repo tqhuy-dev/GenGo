@@ -1,7 +1,8 @@
 package com.gengroup.huy.gengo.Api;
 
 import com.gengroup.huy.gengo.Api.Body.LoginBody;
-import com.gengroup.huy.gengo.Api.Response.LoginResponse;
+import com.gengroup.huy.gengo.Api.Body.SigninBody;
+import com.gengroup.huy.gengo.Api.Response.BaseResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -15,5 +16,8 @@ import retrofit2.http.POST;
 public interface GenGoServices {
 
     @POST("user/login")
-    public abstract Call<LoginResponse> login(@Body LoginBody loginBody);
+    public abstract Call<BaseResponse> login(@Body LoginBody loginBody);
+
+    @POST("user/signin")
+    public abstract Call<BaseResponse> signin(@Body SigninBody signinBody);
 }
