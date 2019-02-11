@@ -7,6 +7,8 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 
 const userController = require('./controller/UserController');
+const foodStoreController = require('./controller/FoodStoreController');
+
 //connect mLab Database
 // mongoose.connect('mongodb://tqhuy:Husky12345@ds153709.mlab.com:53709/database-test',{
 //     useNewUrlParser :true
@@ -46,6 +48,7 @@ app.get('/api/v1/data/gengo' , (req , res , next) =>{
 
 // set api router
 app.use('/api/v1/user' , userController);
+app.use('/api/v1/foodStore' , foodStoreController);
 // initialize handle error
 app.use((req , res , next) => {
     next({
