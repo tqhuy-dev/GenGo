@@ -2,20 +2,24 @@ package com.gengroup.huy.gengo.View.MainView.FoodFragment;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.gengroup.huy.gengo.Adapter.FoodStoreAdapter;
-import com.gengroup.huy.gengo.Common.Constant.Constant;
-import com.gengroup.huy.gengo.Model.FoodStore;
+import com.gengroup.huy.gengo.Api.ApiClient;
+import com.gengroup.huy.gengo.Api.GenGoServices;
+import com.gengroup.huy.gengo.Api.Response.FoodStoreListResponse;
 import com.gengroup.huy.gengo.R;
 
-import java.util.ArrayList;
-import java.util.List;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +27,7 @@ import java.util.List;
 public class FoodFragment extends Fragment {
 
     private RecyclerView rcvListFoodStore;
+    GenGoServices genGoServices;
 
     public FoodFragment() {
         // Required empty public constructor
@@ -34,6 +39,7 @@ public class FoodFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_food, container, false);
+        genGoServices= ApiClient.getClient().create(GenGoServices.class);
         setID(view);
         setupRecycleView();
         return view;
@@ -50,25 +56,39 @@ public class FoodFragment extends Fragment {
     }
 
     private void setDataRecycleView(){
-        FoodStore foodStore = new FoodStore.FoodStoreBuilder("huy","Coffee House")
-                .setAddress("Pho Quang")
-                .setBooking(145)
-                .setStatus(Constant.OPEN_STATUS)
-                .setRatePoint(3)
-                .build();
+//        FoodStore foodStore = new FoodStore.FoodStoreBuilder("huy","Coffee House")
+//                .setAddress("Pho Quang")
+//                .setBooking(145)
+//                .setStatus(Constant.OPEN_STATUS)
+//                .setRatePoint(3)
+//                .build();
+//
+//        FoodStore foodStore1 = new FoodStore.FoodStoreBuilder("huy","Texas Chicken")
+//                .setAddress("Phan Xich Long")
+//                .setBooking(140)
+//                .setStatus(Constant.CLOSED_STATUS)
+//                .setRatePoint(4)
+//                .build();
+//
+//        List<FoodStore> list= new ArrayList<>();
+//        list.add(foodStore);
+//        list.add(foodStore1);
+        Call<FoodStoreListResponse> call = genGoServices.getListFoodStore();
+        call.enqueue(new Callback<FoodStoreListResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<FoodStoreListResponse> call, @NonNull Response<FoodStoreListResponse> response) {
+                Log.d("Data",String.valueOf(response.body().data.size()));
+                FoodStoreAdapter adapter = new FoodStoreAdapter(getContext(),response.body().data);
+                rcvListFoodStore.setAdapter(adapter);
+            }
 
-        FoodStore foodStore1 = new FoodStore.FoodStoreBuilder("huy","Texas Chicken")
-                .setAddress("Phan Xich Long")
-                .setBooking(140)
-                .setStatus(Constant.CLOSED_STATUS)
-                .setRatePoint(4)
-                .build();
+            @Override
+            public void onFailure(@NonNull Call<FoodStoreListResponse> call, @NonNull Throwable t) {
 
-        List<FoodStore> list= new ArrayList<>();
-        list.add(foodStore);
-        list.add(foodStore1);
-        FoodStoreAdapter adapter = new FoodStoreAdapter(getContext(),list);
-        rcvListFoodStore.setAdapter(adapter);
+            }
+        });
+//        FoodStoreAdapter adapter = new FoodStoreAdapter(getContext(),list);
+//        rcvListFoodStore.setAdapter(adapter);
     }
 
     private void setupRecycleView(){

@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * Huy on 2/10/2019.
  */
 
-public class FoodStore {
+public class FoodStore extends BaseModel {
     private String ID = "";
     private String storeName = "";
     private String address = "";
