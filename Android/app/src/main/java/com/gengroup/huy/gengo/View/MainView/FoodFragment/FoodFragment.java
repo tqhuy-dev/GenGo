@@ -56,23 +56,6 @@ public class FoodFragment extends Fragment {
     }
 
     private void setDataRecycleView(){
-//        FoodStore foodStore = new FoodStore.FoodStoreBuilder("huy","Coffee House")
-//                .setAddress("Pho Quang")
-//                .setBooking(145)
-//                .setStatus(Constant.OPEN_STATUS)
-//                .setRatePoint(3)
-//                .build();
-//
-//        FoodStore foodStore1 = new FoodStore.FoodStoreBuilder("huy","Texas Chicken")
-//                .setAddress("Phan Xich Long")
-//                .setBooking(140)
-//                .setStatus(Constant.CLOSED_STATUS)
-//                .setRatePoint(4)
-//                .build();
-//
-//        List<FoodStore> list= new ArrayList<>();
-//        list.add(foodStore);
-//        list.add(foodStore1);
         Call<FoodStoreListResponse> call = genGoServices.getListFoodStore();
         call.enqueue(new Callback<FoodStoreListResponse>() {
             @Override
@@ -87,8 +70,6 @@ public class FoodFragment extends Fragment {
 
             }
         });
-//        FoodStoreAdapter adapter = new FoodStoreAdapter(getContext(),list);
-//        rcvListFoodStore.setAdapter(adapter);
     }
 
     private void setupRecycleView(){
